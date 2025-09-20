@@ -29,7 +29,7 @@ Este projeto exibe gráficos interativos do PIB do Brasil por ano ,PIB per capit
 
 1. Clone o repositório:
    
-    git clone https://github.com/seu-usuario/nome-do-repositorio.git
+    git clone https://github.com/adcleisson/pib-brasil-ibge.git
    
     cd nome-do-repositorio
 
