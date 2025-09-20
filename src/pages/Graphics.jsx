@@ -36,6 +36,7 @@ export default function Graphics() {
     const [data, setData] = useState([]);
     const { theme } = useTheme();
 
+
     const pgText = theme === "light" ? "#000" : "#b3deff";
     const ghText = theme === "light" ? "#000" : "#ffffff";
     const ghColor = theme === "light" ? "#c4d4e2" : "#042037";
