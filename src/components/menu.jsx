@@ -10,13 +10,13 @@ export default function Menu() {
     const navBorder = theme === "light" ? "#ccc" : "#374151";
     const linkColor = theme === "light" ? "#ffffff" : "#b3deff";
     const activeColor = "#007bff";
-    const burgerColor = theme === "light" ? "#333" : "#fff";
+    const burgerColor = theme === "light" ? "#ffffff" : "#fff";
 
     return (
         <>
             <nav style={{ backgroundColor: navBg, borderBottom: `1px solid ${navBorder}`, padding: "10px 20px", position: "relative" }}>
                 <div className="nav-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div className="logo" style={{ fontWeight: "bold", fontSize: "1.5rem", color: linkColor }}>Meu Dashboard</div>
+                    <div className="logo" style={{ fontWeight: "bold", fontSize: "1.5rem", color: linkColor }}>Dashboard</div>
 
                     <button
                         className="burger"
