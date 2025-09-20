@@ -10,8 +10,9 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import api from "../services/api.js";
+import { useTheme} from "../context/ThemeContext.jsx";
 
-// Tabela de câmbio média USD -> BRL
+
 const usdToBrl = {
     1996: 1.0051, 1997: 1.0779, 1998: 1.1605, 1999: 1.8207,
     2000: 1.8301, 2001: 2.3527, 2002: 2.9213, 2003: 3.0750,
@@ -22,17 +23,23 @@ const usdToBrl = {
     2020: 5.1587, 2021: 5.3958, 2022: 5.1605,
 };
 
-// Formatador brasileiro
+
 const formatNumber = (value, isCurrency = false) => {
     if (value == null) return "-";
     return new Intl.NumberFormat("pt-BR", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-    }).format(value) + (isCurrency ? " US$" : "");
+    }).format(value);
 };
 
 export default function Graphics() {
     const [data, setData] = useState([]);
+    const { theme } = useTheme();
+
+    const pgText = theme === "light" ? "#000" : "#b3deff";
+    const ghText = theme === "light" ? "#000" : "#ffffff";
+    const ghColor = theme === "light" ? "#c4d4e2" : "#042037";
+    const bgColor = theme === "light" ? "rgba(255,255,255,0)" : "#13191e";
 
     useEffect(() => {
         async function fetchData() {
@@ -70,26 +77,28 @@ export default function Graphics() {
         width: "100%",
         maxWidth: "85%",
         padding: "20px",
-        backgroundColor: "#EAEAEA",
+        backgroundColor: ghColor,
         borderRadius: "12px",
         boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
-        overflowX: "auto"
+        overflowX: "auto",
+        transition: "0.8s"
     };
 
     const titleStyle = {
         textAlign: "center",
         marginBottom: "20px",
-        color: "#000000",
+        color: ghText,
         fontWeight: "600"
     };
 
     return (
-        <div style={{ marginTop: "-50px", width: "100%", backgroundColor: "#fff", minHeight: "100vh" }}>
-            <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <h1 style={{ color: "#fff", fontSize: "24px" }}>Relatório Econômico</h1>
-                <p style={{ color: "#ccc" }}>Evolução do PIB ao longo dos anos</p>
+        <div style={{backgroundColor: bgColor}} className="mt-0 w-full min-h-screen">
+            <div className="text-center py-5">
+                <h1 style={{ color: pgText}} className="mt-10  text-5xl font-semibold text-center transition-colors duration-300">
+                    Gráficos evolução do PIB em dólares
+                </h1>
             </div>
-            {/* Gráfico PIB em bilhões */}
+
             <div style={{ ...cardStyle, height: "400px" }}>
                 <h2 style={titleStyle}>Evolução do PIB Total (US$ Bilhões)</h2>
                 <ResponsiveContainer width="100%" height="85%">
@@ -114,9 +123,6 @@ export default function Graphics() {
                     </LineChart>
                 </ResponsiveContainer>
             </div>
-
-
-            {/* Gráfico PIB per capita */}
 
             <div style={{ ...cardStyle, height: "400px" }}>
                 <h2 style={titleStyle}>Evolução do PIB Per Capita (US$)</h2>
@@ -143,11 +149,8 @@ export default function Graphics() {
                 </ResponsiveContainer>
             </div>
             <div style={{ textAlign: "center", padding: "40px 0" }}>
-                <h2 style={{ color: "#fff", fontSize: "22px" }}>Conclusões do Relatório</h2>
-                <p style={{ color: "#ccc", maxWidth: "700px", margin: "0 auto" }}>
-                    Aqui você pode adicionar uma análise comparativa entre o PIB Total e o PIB Per Capita,
-                    destacar tendências importantes e incluir observações relevantes para a tomada de decisão.
-                </p>
+                <h2 style={{ color: "#fff", fontSize: "22px" }}></h2>
+                <p style={{ color: "#ccc", maxWidth: "700px", margin: "0 auto" }}></p>
             </div>
         </div>
     );

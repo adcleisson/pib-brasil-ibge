@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../services/api.js";
+import { useTheme} from "../context/ThemeContext.jsx";
+
 
 const usdToBrl = {
     1996: 1.0051, 1997: 1.0779, 1998: 1.1605, 1999: 1.8207,
@@ -18,7 +20,11 @@ const formatNumber = (value, isCurrency = false) => {
 
 export default function Table() {
     const [data, setData] = useState([]);
-
+    const { theme } = useTheme();
+    const pgText = theme === "light" ? "#000" : "#b3deff";
+    const tbText = theme === "light" ? "#000" : "#ffffff";
+    const tbColor = theme === "light" ? "#c4d4e2" : "#042037";
+    const bgColor = theme === "light" ? "rgba(255,255,255,0)" : "#13191e";
     useEffect(() => {
         async function fetchData() {
             try {
@@ -48,23 +54,33 @@ export default function Table() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-black p-6">
-            <h1 className="text-5xl font-semibold text-center mb-6">Tabela de PIB</h1>
-            <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300">
-                    <thead className="bg-gray-800">
+        <div style={{backgroundColor: bgColor}} className="min-h-screen p-6 ">
+            <h1 style={{color: pgText}} className="mt-5 mb-15 text-5xl font-semibold text-center transition-colors duration-300">
+                Tabela de PIB por ano no Brasil
+            </h1>
+            <div className=" overflow-x-auto transition-colors duration-300">
+                <table style={{backgroundColor: tbColor}} className="min-w-full border  transition-colors duration-300">
+                    <thead style={{backgroundColor: tbColor}} className=" transition-colors duration-300">
                     <tr>
-                        <th className="px-4 py-2 border">Ano</th>
-                        <th className="px-4 py-2 border">PIB Total (US$ Bi)</th>
-                        <th className="px-4 py-2 border">PIB Per Capita (US$)</th>
+                        <th style={{color: tbText}} className="px-4 py-2 border transition-colors duration-300">
+                            Ano
+                        </th>
+                        <th style={{color: tbText}} className="px-4 py-2 border transition-colors duration-300">
+                            PIB Total (US$ Bi)
+                        </th>
+                        <th style={{color: tbText}} className="px-4 py-2 border transition-colors duration-300 ">
+                            PIB Per Capita (US$)
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {data.map((row) => (
-                        <tr key={row.year} className="text-center">
-                            <td className="px-4 py-2 border">{row.year}</td>
-                            <td className="px-4 py-2 border">{formatNumber(row.pib, true)}</td>
-                            <td className="px-4 py-2 border">{formatNumber(row.pibPerCapita, true)}</td>
+                        <tr
+                            key={row.year} className="text-center transition-colors duration-300 hover:bg-blue-100 dark:hover:bg-gray-400 "
+                        >
+                            <td style={{color: tbText}} className="px-4 py-2 border ">{row.year}</td>
+                            <td style={{color: tbText}} className="px-4 py-2 border ">{formatNumber(row.pib, true)}</td>
+                            <td style={{color: tbText}} className="px-4 py-2 border ">{formatNumber(row.pibPerCapita, true)}</td>
                         </tr>
                     ))}
                     </tbody>
